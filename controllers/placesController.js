@@ -109,7 +109,3 @@ exports.addPlace = addPlace;
 exports.getOnePlace = getOnePlace;
 exports.getPlaces = getPlaces;
 exports.editPlace = editPlace;
-
-
-
-//module.exports
