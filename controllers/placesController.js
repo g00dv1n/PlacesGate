@@ -57,6 +57,7 @@ function addPlace(req, res) {
             switch (params.author) {
                 case 'cuckoo': {
                     params.data = PathNormalizer.normalizePath(params.data, "Andy Harrison", "C:");
+                    break;
                 }
             }
         }
@@ -120,7 +121,6 @@ function editPlace(req, res) {
                 res.status = 404;
             }
             res.json(place);
-
         })
         .catch(function (err) {
             res.json(err);
