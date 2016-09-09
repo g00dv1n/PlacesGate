@@ -5,7 +5,7 @@
 
 let PathNormalizer = require('helpers/path-normalizer');
 
-let testPath = 'C:\\g00dv1n\\Documents\\1.txt';
+let testPath = 'C:\\Program Files\\bandzip';
 
 
-console.log(PathNormalizer.normalizePath(testPath));
+console.log(PathNormalizer.normalizePath(testPath,'g00dv1n', 'C:'));

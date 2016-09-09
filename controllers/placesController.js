@@ -1,6 +1,12 @@
 let Place = require('models/place');
 let co = require('co');
 let mongoose = require('db')
+let PathNormalizer = require('helpers/path-normalizer');
+
+const NEED_NORMALIZE_PATH_AUTHORS = ['cuckoo'];
+
+
+
 
 function getPlacesConfig () {
     return new Promise((resolve, reject) =>{
@@ -16,9 +22,24 @@ function getPlacesConfig () {
     });
 }
 
+function checkPathEx(path) {
+    return co(function *() {
+        let conf = yield getPlacesConfig();
+        let exc_dirs = conf.exclusions.dirs;
+        if (exc_dirs.indexOf(path) != -1) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+}
+
+
 function addPlace(req, res) {
     co(function* () {
+
         let params = req.body;
+
         if (!params.data || !params.type) {
             return res.json({
                 error: 'Data and type fields are required'
@@ -32,17 +53,19 @@ function addPlace(req, res) {
             });
         }
 
-        if (params.type === 'folder') {
-            let conf = yield getPlacesConfig();
-            let exc_dirs = conf.exclusions.dirs;
-
-            if (exc_dirs.indexOf(params.data) != -1) {
-                return res.json({
-                    error: 'Folder in exclusions'
-                });
+        if (NEED_NORMALIZE_PATH_AUTHORS.indexOf(params.author)!= -1) {
+            switch (params.author) {
+                case 'cuckoo': {
+                    params.data = PathNormalizer.normalizePath(params.data, "Andy Harrison", "C:");
+                }
             }
         }
-
+        let ex = yield checkPathEx(params.data);
+        if (ex) {
+            return res.json({
+                error: 'Folder in exclusions'
+            });
+        }
 
         let p = new Place({
             data: params.data,
