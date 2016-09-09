@@ -2,7 +2,7 @@
  * Created by g00dv1n on 08.09.16.
  */
 
-let EnvGenerator = require('libs/env-generator');
+let EnvGenerator = require('helpers/env-generator');
 
 class PathNormalizer {
 
