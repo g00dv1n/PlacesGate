@@ -10,10 +10,18 @@
     "co": "^4.6.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
+    "event-stream": "^3.3.4",
     "express": "~4.13.4",
+    "gulp": "^3.9.1",
+    "gulp-angular-filesort": "^1.1.1",
+    "gulp-stylus": "^2.5.0",
     "jade": "~1.11.0",
+    "main-bower-files": "^2.13.1",
     "mongoose": "^4.6.0",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "gulp-inject": "^4.1.0"
   }
 }

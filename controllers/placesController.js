@@ -71,7 +71,8 @@ function addPlace(req, res) {
         let p = new Place({
             data: params.data,
             type: params.type,
-            author: params.author || 'bot'
+            author: params.author || 'bot',
+            name: params.name || 'Malware.Gen'
         });
 
         let doc = yield p.save();
@@ -83,10 +84,10 @@ function addPlace(req, res) {
     });
 }
 
-function getPlaces (res, req) {
+function getPlaces (req, res) {
     Place.find({})
         .then(function(places) {
-            if (req.query.from && req.query.to) {
+            if (req.query && req.query.from && req.query.to) {
                 try {
                     res.json(places.slice(req.query.from, req.query.to));
                 } catch (e) {
@@ -97,6 +98,7 @@ function getPlaces (res, req) {
             }
         })
         .catch(function (err) {
+            console.log(err)
             res.json(err);
         });
 }
@@ -127,8 +129,19 @@ function editPlace(req, res) {
         });
 }
 
+function deletePlace(req,res) {
+    Place.remove({_id: req.params.id })
+        .then((res) => {
+            res.json(res);
+        })
+        .catch((err) => {
+            res.json(err);
+        });
+}
+
 
 exports.addPlace = addPlace;
 exports.getOnePlace = getOnePlace;
 exports.getPlaces = getPlaces;
 exports.editPlace = editPlace;
+exports.deletePlace = deletePlace;

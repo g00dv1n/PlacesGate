@@ -25,6 +25,10 @@ router.patch('/:id', (req, res ) => {
     controller.editPlace(req, res);
 });
 
+router.delete('/:id', (req,res) => {
+    controller.deletePlace(req,res);
+});
+
 
 
 module.exports = router;
