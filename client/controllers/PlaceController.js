@@ -29,15 +29,17 @@
                         Notification.success('Place add successful');
                     })
                     .catch(function (err) {
-                        Notification.error(err.message);
+
+                        Notification.error(err.data.message);
                     });
             } else  {
                 PlacesHelper.editPlace(vm.model)
                     .then(function (res) {
-                        Notification.success('Place edit successful');
+                        Notification.success('Place add successful');
                     })
                     .catch(function (err) {
-                        Notification.error(err.message);
+                        console.log(err);
+                        Notification.error(err.data.message);
                     });
             }
         };

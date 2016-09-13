@@ -41,15 +41,15 @@ function addPlace(req, res) {
         let params = req.body;
 
         if (!params.data || !params.type) {
-            return res.json({
-                error: 'Data and type fields are required'
+            return res.status(406).json({
+                message: 'Data and type fields are required'
             });
         }
 
         let count = yield  Place.count({data: params.data});
         if (count > 0) {
-            return res.json({
-                error: 'Place already exists'
+            return res.status(409).json({
+                message: 'Place already exists'
             });
         }
 
@@ -63,8 +63,8 @@ function addPlace(req, res) {
         }
         let ex = yield checkPathEx(params.data);
         if (ex) {
-            return res.json({
-                error: 'Folder in exclusions'
+            return res.status(422).json({
+                message: 'Folder in exclusions'
             });
         }
 
@@ -107,7 +107,7 @@ function getOnePlace(req, res) {
     Place.findById(req.params.id)
         .then(function(place) {
             if (!place) {
-                res.status = 404;
+                return res.status(404).json({message: 'Not found'});
             }
             res.json(place);
         })
@@ -117,16 +117,30 @@ function getOnePlace(req, res) {
 }
 
 function editPlace(req, res) {
-    Place.findOneAndUpdate({'_id': req.params.id}, req.body, {new: true})
-        .then(function (place) {
-            if (!place) {
-                res.status = 404;
-            }
-            res.json(place);
-        })
-        .catch(function (err) {
-            res.json(err);
-        });
+    co(function* () {
+        let params = req.body;
+        let count = yield  Place.count({data: params.data});
+
+        if (!params.data || !params.type) {
+            return res.status(406).json({
+                message: 'Data and type fields are required'
+            });
+        }
+
+        if (count > 0) {
+            return res.status(409).json({
+                message: 'Place already exists'
+            });
+        }
+        let place = yield Place.findOneAndUpdate({'_id': req.params.id}, req.body, {new: true})
+        if (!place) {
+            return res.status(404).json({message: 'Not found'});
+        }
+        res.json(place);
+    }).catch((err)=>{
+        res.json(err);
+    });
+
 }
 
 function deletePlace(req,res) {
