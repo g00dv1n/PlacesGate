@@ -17,16 +17,30 @@
 <script src="/bower_components/angular/angular.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/bower_components/angular-smart-table/dist/smart-table.min.js"></script>
+<script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="/bower_components/angular-route/angular-route.js"></script>
 <script src="/bower_components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="app.js"></script>
 <script src="config.js"></script>
 <script src="controllers/TableController.js"></script>
+<script src="controllers/PlaceController.js"></script>
 <script src="services/PlacesHelper.js"></script>
+
 <!-- endinject -->
 
 <div class="container">
-
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/#/">Places Gate</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/#/">Home</a></li>
+                <li><a href="/#/new">Create new</a></li>
+            </ul>
+        </div>
+    </nav>
     <div ng-view></div>
 </div>
 

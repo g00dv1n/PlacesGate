@@ -1,28 +1,18 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Places Gate</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Create new</a></li>
-        </ul>
-    </div>
-</nav>
 
-<table st-pipe="vm.getData" st-table="vm.places" class="table table-striped">
+
+<table st-table="vm.places" st-pipe="vm.getData" class="table table-striped">
     <thead>
     <tr>
-        <th>Post Date</th>
-        <th>Author</th>
-        <th>Type</th>
-        <th>Data</th>
-        <th>Name</th>
+        <th st-sort="created">Post Date</th>
+        <th st-sort="author">Author</th>
+        <th st-sort="type">Type</th>
+        <th st-sort="data">Data</th>
+        <th st-sort="name">Name</th>
     </tr>
     </thead>
     <tbody ng-show="!vm.isLoading">
     <tr ng-repeat="row in vm.places">
-        <td>{{row.created}}</td>
+        <td>{{row.created | date:'dd-MM-yyyy'}}</td>
         <td>{{row.author}}</td>
         <td>{{row.type}}</td>
         <td>{{row.data }}</td>
@@ -34,10 +24,10 @@
             </button>
         </td>
         <td>
-            <button type="button" class="btn btn-sm btn-success">
-                <i class="glyphicon glyphicon-pencil">
+            <a type="button" class="btn btn-sm btn-success" ng-href="/#/edit/{{row._id}}">
+                <i class="glyphicon glyphicon-pencil" >
                 </i>
-            </button>
+            </a>
         </td>
     </tr>
     </tbody>
@@ -46,11 +36,4 @@
         <td colspan="4" class="text-center">Loading ... </td>
     </tr>
     </tbody>
-    <tfoot>
-    <tr>
-        <td colspan="5" class="text-center">
-            <div st-pagination="" st-items-by-page="15"></div>
-        </td>
-    </tr>
-    </tfoot>
 </table>

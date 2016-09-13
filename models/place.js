@@ -7,7 +7,7 @@ let mongoose = require('db');
 
 let placeSheme = mongoose.Schema({
     data: String,
-    type: {type: String, enum: ['registr', 'folder', 'file']},
+    type: {type: String, enum: ['FPL', 'FMPL', 'PL', 'MPL', 'RPL', 'RMPL']},
     author: String,
     name: String,
     created: {

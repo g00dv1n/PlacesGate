@@ -1,0 +1,19 @@
+<form>
+    <div class="form-group">
+        <label for="data">Data</label>
+        <input type="text" placeholder="%programfiles%\..\.." class="form-control" id="data" ng-model="vm.model.data">
+    </div>
+    <div class="form-group">
+        <label for="type">Type</label>
+        <input type="text" placeholder="FPL, FMPL, PL, MPL, RPL, RMPL" class="form-control" id="type" ng-model="vm.model.type">
+    </div>
+    <div class="form-group">
+        <label for="author">Author</label>
+        <input type="text"  placeholder="bot" class="form-control" id="author" ng-model="vm.model.author">
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" placeholder="Malware.Gen" class="form-control" id="name" ng-model="vm.model.name">
+    </div>
+    <button type="submit" class="btn btn-default" ng-click="vm.submit()">Submit</button>
+</form>

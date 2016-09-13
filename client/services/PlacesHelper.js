@@ -12,6 +12,9 @@
         var service = {};
         service.getPlaces = getPlaces;
         service.deletePlace = deletePlace;
+        service.getOnePlace = getOnePlace;
+        service.createPlace = createPlace;
+        service.editPlace = editPlace;
 
         var places = 'places'
         service.host = '127.0.0.1:8080';
@@ -29,8 +32,22 @@
             //return $http.get(service.resource);
         }
 
+        function getOnePlace(id) {
+            return $http.get(service.resource + '/' + String(id));
+            //return $http.get(service.resource);
+        }
+
         function deletePlace(id) {
             return $http.delete(service.resource + '/' + String(id));
+        }
+
+
+        function editPlace(data) {
+            return $http.patch(service.resource + '/' + String(data._id),data);
+        }
+
+        function createPlace(data) {
+            return $http.post(service.resource,data);
         }
 
         return service;

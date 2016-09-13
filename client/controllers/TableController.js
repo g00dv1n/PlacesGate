@@ -28,22 +28,20 @@
         vm.deletePlace = deletePlace;
         vm.getData = function (tableState) {
             vm.isLoading = true;
-            var pagination = tableState.pagination;
-
-            var start = pagination.start || 0;     // This is NOT the page number, but the index of item in the list that you want to use to display the table.
-            var number = pagination.number || 15;  // Number of entries showed per page.
-            tableState.pagination.numberOfPages = 5;
-            PlacesHelper.getPlaces(start, start + number)
+            PlacesHelper.getPlaces()
                 .then(function (res) {
                     vm.isLoading = false;
 
                     vm.places = res.data;
-                    //console.log(vm.places.length);
-                    if (vm.places.length == 15) {
-                        //tableState.pagination.numberOfPages += 1;
-                    }
                 });
         };
+
+        PlacesHelper.getPlaces()
+            .then(function (res) {
+                vm.isLoading = false;
+                vm.places = res.data;
+            });
+
 
 
         function CreateRandom() {

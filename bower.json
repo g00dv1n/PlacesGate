@@ -15,6 +15,12 @@
     "tests"
   ],
   "dependencies": {
-    "angular-ui-notification": "^0.2.0"
+    "angular-ui-notification": "^0.2.0",
+    "angular": "^1.5.8",
+    "angular-smart-table": "^2.1.8",
+    "angular-route": "^1.5.8",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.0",
+    "angular-ui-router": "^0.3.1"
   }
 }
