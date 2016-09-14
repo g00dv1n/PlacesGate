@@ -12,16 +12,28 @@ let EnvGenerator = require('helpers/env-generator');
 class PathNormalizer {
 
     static normalizePath(path, username, windrive) {
-        let vars = EnvGenerator.getEnvVars(username, windrive);
+        let regExps = EnvGenerator.getEnvRegExps();
         let norm_path = '';
-        path = path.toLowerCase();
+        let env_var = '';
+        //path = path.toLowerCase();
 
-        for (let key in vars) {
+        /*for (let key in regExps) {
             let str = vars[key].toLowerCase();
             norm_path  = path.replace(str, `%${key}%`);
             if (norm_path != path) break;
+        }*/
+        for (let key in regExps) {
+            let re = regExps[key];
+            norm_path = path.replace(re, key);
+            if (norm_path != path) {
+                env_var = key;
+                break;
+            }
         }
-        return norm_path;
+        return {
+            data: norm_path,
+            env: env_var
+        }
     }
 }
 

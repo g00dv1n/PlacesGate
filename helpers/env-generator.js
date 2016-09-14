@@ -4,21 +4,38 @@
 
 
 class EnvGenerator {
-    static getEnvVars (username, windrive) {
+    static getEnvRegExps () {
         let vars = {
-            mydoc: `${windrive}\\${username}\\Documents`,
-            desktop: `${windrive}\\${username}\\Desktop`,
-            appdata: `${windrive}\\${username}\\AppData\\Roaming`,
-            desktopdir: `${windrive}\\${username}\\Desktop`,
-            localappdata: `${windrive}\\${username}\\AppData\\Local`,
+
+            //programs:`${windrive}\\Users\\${username}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs`,
+            //startup: `${windrive}\\Users\\${username}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup`,
+            '%startup%' :/.:\\Users\\.*\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup/i,
+            '%programs%':/.:\\Users\\.*\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs/i,
+            '%startmenu%': /.:\\Users\\.*\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu/i,
+            '%appdata%' :/.:\\Users\\.*\\AppData\\Roaming/i,
+            '%temp%': /.:\\Users\\.*\\AppData\\Local\\Temp/i,
+            '%mydoc%' : /.*\\Users\\.*\\Documents/i,
+            '%chromeprofile%': /.:\\Users\\.*\\AppData\\Local\\Google\\Chrome\\User Data\\Default/i,
+            '%commonappdata%': /.:\\ProgramData/i,
+            '%commondesktopdir%': /.:\\Users\\Public\\Desktop/i,
+            '%commondir%': /.:\\Program Files\\Common Files/i,
+            '%favorites%': /.:\\Users\\.*\\Favorites/g,
+            '%localappdata%': /.:\\Users\\.*\\AppData\\LocalLow/i,
+            '%local%': /.:\\Users\\.*\\AppData\\Local/i,
+            '%programfiles%': /.:\\Program Files/i
+
+
+
+            /*mydoc: `${windrive}\\Users\\${username}\\Documents`,
+            desktop: `${windrive}\\Users\\${username}\\Desktop`,
+            appdata: `${windrive}\\Users\\${username}\\AppData\\Roaming`,
+            localappdata: `${windrive}\\Users\\${username}\\AppData\\Local`,
             local: `${windrive}\\${username}\\AppData\\Local`,
-            favorites: `${windrive}\\${username}\\Favorites`,
-            tempdir: `${windrive}\\${username}\\AppData\\Local\\Temp`,
-            localappdatalow: `${windrive}\\${username}\\AppData\\LocalLow`,
-            commonfavorites: `${windrive}\\${username}\\Favorites`,
-            userprofile: `${windrive}\\${username}`,
-            programs:`${windrive}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs`,
-            startup: `${windrive}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup`,
+            favorites: `${windrive}\\Users\\${username}\\Favorites`,
+            temp: `${windrive}\\Users\\${username}\\AppData\\Local\\Temp`,
+            localappdatalow: `${windrive}\\Users\\${username}\\AppData\\LocalLow`,
+            userprofile: `${windrive}\\Users\\${username}`,
+
             commonstartup: `${windrive}\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Startup`,
             startmenu: `${windrive}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
             commonprograms: `${windrive}\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs`,
@@ -33,7 +50,7 @@ class EnvGenerator {
             commonappdata: `${windrive}\\ProgramData`,
             alluserprofile: `${windrive}\\ProgramData`,
             windir:  `${windrive}\\Windows`,
-            sysdirve: `${windrive}`
+            sysdirve: `${windrive}`*/
         };
         return vars;
     }

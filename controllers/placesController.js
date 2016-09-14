@@ -4,25 +4,15 @@ let Place = require('models/place');
 let co = require('co');
 let mongoose = require('db')
 let PathNormalizer = require('helpers/path-normalizer');
+let filter = require('helpers/place-filter');
 
 const NEED_NORMALIZE_PATH_AUTHORS = ['cuckoo'];
 
 
 
-
-function getPlacesConfig () {
-    return new Promise((resolve, reject) =>{
-        let places = mongoose.secondaryDb.db.collection('config');
-        places.find({}).toArray(function(err, docs) {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(docs[0])
-            }
-
-        });
-    });
-}
+let sendError = (res, err) => {
+    return res.status(err.status || 404).json(err);
+};
 
 function checkPathEx(path) {
     return co(function *() {
@@ -42,50 +32,30 @@ function addPlace(req, res) {
 
         let params = req.body;
 
-        if (!params.data || !params.type) {
-            return res.status(406).json({
-                message: 'Data and type fields are required'
-            });
-        }
-
+        yield filter.checkParams(params);
 
         if (NEED_NORMALIZE_PATH_AUTHORS.indexOf(params.author)!= -1) {
             switch (params.author) {
                 case 'cuckoo': {
-                    params.data = PathNormalizer.normalizePath(params.data, "Andy Harrison", "C:");
+                    let norm = PathNormalizer.normalizePath(params.data);
+                    params.data = norm.data;
+                    params.env = norm.env;
                     break;
                 }
             }
         }
 
-        let count = yield  Place.count({data: params.data});
-        console.log(count);
-        if (count > 0) {
-            return res.status(409).json({
-                message: 'Place already exists'
-            });
-        }
+        yield filter.placeExists(params);
 
-        let ex = yield checkPathEx(params.data);
-        if (ex) {
-            return res.status(422).json({
-                message: 'Folder in exclusions'
-            });
-        }
+        yield filter.checkPathEx(params);
 
-        let p = new Place({
-            data: params.data,
-            type: params.type,
-            author: params.author || 'bot',
-            name: params.name || 'Malware.Gen'
-        });
-
+        let p = new Place(params);
         let doc = yield p.save();
 
         res.json(doc);
 
     }).catch((err) => {
-        res.json(err);
+        sendError(res, err);
     });
 }
 
@@ -103,47 +73,40 @@ function getPlaces (req, res) {
             }
         })
         .catch(function (err) {
-            console.log(err)
-            res.json(err);
+            sendError(res,err);
         });
 }
 
 function getOnePlace(req, res) {
-    Place.findById(req.params.id)
+
+   Place.findById(req.params.id)
         .then(function(place) {
             if (!place) {
                 return res.status(404).json({message: 'Not found'});
+            } else {
+                res.json(place);
             }
-            res.json(place);
         })
         .catch(function (err) {
-            res.json(err);
+            sendError(res,err);
         });
 }
 
 function editPlace(req, res) {
     co(function* () {
         let params = req.body;
-        let count = yield  Place.count({data: params.data});
 
-        if (!params.data || !params.type) {
-            return res.status(406).json({
-                message: 'Data and type fields are required'
-            });
-        }
+        yield filter.checkParams(params);
 
-        if (count > 0) {
-            return res.status(409).json({
-                message: 'Place already exists'
-            });
-        }
+        yield filter.placeExists(params);
+
         let place = yield Place.findOneAndUpdate({'_id': req.params.id}, req.body, {new: true})
         if (!place) {
-            return res.status(404).json({message: 'Not found'});
+            throw new Error('Not Found');
         }
         res.json(place);
     }).catch((err)=>{
-        res.json(err);
+        sendError(res,err);
     });
 
 }
@@ -154,7 +117,7 @@ function deletePlace(req,res) {
             res.json(res);
         })
         .catch((err) => {
-            res.json(err);
+            sendError(res,err);
         });
 }
 

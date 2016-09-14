@@ -5,7 +5,7 @@
 
 let PathNormalizer = require('helpers/path-normalizer');
 
-let testPath = 'C:\\Program Files\\bandzip';
+let testPath = 'C:\\users\\andy harrison\\appdata\\local\\temp\\is-4v6ed.tmp\\botva2.dll';
 
 
-console.log(PathNormalizer.normalizePath(testPath,'g00dv1n', 'C:'));
+console.log(PathNormalizer.normalizePath(testPath));
