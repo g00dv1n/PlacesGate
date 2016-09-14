@@ -21,7 +21,7 @@ let placeSheme = mongoose.Schema({
         default: Date.now
     },
     env: String,
-    md5: String,
+    md5: String
 });
 
 

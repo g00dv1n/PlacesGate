@@ -15,12 +15,15 @@
         var id = $routeParams.id;
 
         vm.model = {}
-        vm.model.name = 'dasd';
+        vm.model.name = '';
 
-        PlacesHelper.getOnePlace(id)
-            .then(function (res) {
-                vm.model = res.data;
-            });
+        if(!isNew && id) {
+            PlacesHelper.getOnePlace(id)
+                .then(function (res) {
+                    vm.model = res.data;
+                });
+        }
+
 
         vm.submit = function () {
             if(isNew) {

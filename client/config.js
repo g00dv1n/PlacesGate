@@ -1,7 +1,11 @@
 (function () {
     angular
         .module('placesGate')
-        .config(appConfig);
+        .config(appConfig)
+        .constant('constConfig' ,{
+            host: '127.0.0.1',
+            port: 8080
+        });
 
     appConfig.$inject = ['$routeProvider', '$locationProvider'];
     function appConfig($routeProvider, $locationProvider) {

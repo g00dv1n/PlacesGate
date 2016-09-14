@@ -6,8 +6,8 @@
         .module('placesGate')
         .factory('PlacesHelper', PlacesHelper);
 
-    PlacesHelper.$inject = ['$http'];
-    function PlacesHelper($http) {
+    PlacesHelper.$inject = ['$http', 'constConfig'];
+    function PlacesHelper($http, constConfig) {
 
         var service = {};
         service.getPlaces = getPlaces;
@@ -17,7 +17,7 @@
         service.editPlace = editPlace;
 
         var places = 'places'
-        service.host = '127.0.0.1:8080';
+        service.host = constConfig.host + ':' + constConfig.port;
         service.resource = `http://${service.host}/${places}`;
         
         function getPlaces(from, to, params) {

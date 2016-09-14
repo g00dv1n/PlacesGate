@@ -6,6 +6,7 @@ let Place = require('models/place');
 let mongoose = require('db')
 let PathNormalizer = require('helpers/path-normalizer');
 let co = require('co');
+let EX_DIRS = require('helpers/exclusion-dirs');
 
 const NEED_NORMALIZE_PATH_AUTHORS = ['cuckoo'];
 
@@ -58,8 +59,9 @@ function checkParams(params) {
 
 function checkPathEx(params) {
     return co(function *() {
-        let conf = yield getPlacesConfig();
-        let exc_dirs = conf.exclusions.dirs;
+        //let conf = yield getPlacesConfig();
+        //let exc_dirs = conf.exclusions.dirs;
+        let exc_dirs = EX_DIRS;
         if (exc_dirs.indexOf(params.data) != -1) {
             throw error('Folder in exclusions', 422);
         } else {
