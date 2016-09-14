@@ -1,3 +1,5 @@
+'use strict'
+
 let Place = require('models/place');
 let co = require('co');
 let mongoose = require('db')
@@ -46,12 +48,6 @@ function addPlace(req, res) {
             });
         }
 
-        let count = yield  Place.count({data: params.data});
-        if (count > 0) {
-            return res.status(409).json({
-                message: 'Place already exists'
-            });
-        }
 
         if (NEED_NORMALIZE_PATH_AUTHORS.indexOf(params.author)!= -1) {
             switch (params.author) {
@@ -61,6 +57,15 @@ function addPlace(req, res) {
                 }
             }
         }
+
+        let count = yield  Place.count({data: params.data});
+        console.log(count);
+        if (count > 0) {
+            return res.status(409).json({
+                message: 'Place already exists'
+            });
+        }
+
         let ex = yield checkPathEx(params.data);
         if (ex) {
             return res.status(422).json({
