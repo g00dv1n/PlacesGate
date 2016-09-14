@@ -11,6 +11,7 @@ const NEED_NORMALIZE_PATH_AUTHORS = ['cuckoo'];
 
 
 let sendError = (res, err) => {
+    console.log(err);
     return res.status(err.status || 404).json(err);
 };
 
@@ -113,8 +114,8 @@ function editPlace(req, res) {
 
 function deletePlace(req,res) {
     Place.remove({_id: req.params.id })
-        .then((res) => {
-            res.json(res);
+        .then(function (place)  {
+            res.json(place);
         })
         .catch((err) => {
             sendError(res,err);
