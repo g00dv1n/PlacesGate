@@ -43,6 +43,29 @@
 ```
   GET http://host:port/places/stat
 ```
+Пример ответа:
+```javascript
+  {
+    "%startup%": 0,
+    "%programs%": 0,
+    "%startmenu%": 0,
+    "%appdata%": 3,
+    "%temp%": 23,
+    "%mydoc%": 0,
+    "%desktop%": 0,
+    "%chromeprofile%": 0,
+    "%commonappdata%": 0,
+    "%commondesktopdir%": 0,
+    "%commondir%": 0,
+    "%favorites%": 0,
+    "%localappdata%": 0,
+    "%local%": 0,
+    "%programfiles%": 16,
+    "%tasks%": 0,
+    "%systemdir%": 1,
+    "%windir%": 0
+  }
+```
 
 #TODO
 * Умный фильтр на фронте
