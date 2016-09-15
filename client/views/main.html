@@ -24,7 +24,7 @@
             </button>
         </td>
         <td>
-            <a type="button" class="btn btn-sm btn-success" ng-href="/#/edit/{{row._id}}">
+            <a type="button" class="btn btn-sm btn-success" ng-href="#edit/{{row._id}}">
                 <i class="glyphicon glyphicon-pencil" >
                 </i>
             </a>
@@ -33,7 +33,13 @@
     </tbody>
     <tbody ng-show="vm.isLoading">
     <tr>
-        <td colspan="4" class="text-center">Loading ... </td>
+        <td colspan="10" class="text-center"> <b>Loading ... </b></td>
     </tr>
     </tbody>
+    <tfoot>
+    <tr>
+        <td class="text-center" st-pagination="" st-items-by-page="15"  colspan="10">
+        </td>
+    </tr>
+    </tfoot>
 </table>

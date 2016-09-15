@@ -28,7 +28,13 @@
         vm.deletePlace = deletePlace;
         vm.getData = function (tableState) {
             vm.isLoading = true;
-            PlacesHelper.getPlaces()
+            var pagination = tableState.pagination;
+            console.log(tableState.pagination);
+            var start = pagination.start || 0;
+            var number = pagination.number || 15;
+            var page = (pagination.start + pagination.number) / 15;
+            tableState.pagination.numberOfPages = page + 5;
+            PlacesHelper.getPlaces(start, start + number)
                 .then(function (res) {
                     vm.isLoading = false;
 

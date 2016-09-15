@@ -9,6 +9,11 @@ let mongoose = require('db')
 let controller = require('controllers/placesController');
 
 
+router.get('/stat', (req,res) => {
+    controller.getStatistic(req,res);
+});
+
+
 router.get('/', (req, res ) => {
     controller.getPlaces(req, res);
 });
@@ -28,6 +33,11 @@ router.patch('/:id', (req, res ) => {
 router.delete('/:id', (req,res) => {
     controller.deletePlace(req,res);
 });
+
+router.get('/stat', (req,res) => {
+    controller.getStatistic(req,res);
+});
+
 
 
 

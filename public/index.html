@@ -2,7 +2,7 @@
 <html ng-app="placesGate">
 <head>
     <title>Places Gate</title>
-    <base href="/">
+    <base href="#/">
     <!-- inject:css -->
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/bower_components/angular/angular-csp.css">
@@ -28,6 +28,7 @@
 <script src="config.js"></script>
 <script src="controllers/TableController.js"></script>
 <script src="controllers/PlaceController.js"></script>
+<script src="controllers/StatController.js"></script>
 <script src="services/PlacesHelper.js"></script>
 
 <!-- endinject -->
@@ -36,11 +37,12 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/#/">Places Gate</a>
+                <a class="navbar-brand" href="#/">Places Gate</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/#/">Home</a></li>
-                <li><a href="/#/new">Create new</a></li>
+                <li><a href="#/">Home</a></li>
+                <li><a href="#new">Create new</a></li>
+                <li><a href="#stat">Statistic</a></li>
             </ul>
         </div>
     </nav>

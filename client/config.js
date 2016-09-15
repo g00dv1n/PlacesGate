@@ -27,8 +27,14 @@
                 controller: 'PlaceController',
                 controllerAs: 'vm',
                 isNew: false
+            })
+            .when('/stat', {
+                templateUrl: './views/stat.html',
+                controller: 'StatController',
+                controllerAs: 'vm',
+                isNew: false
             });
 
-        $locationProvider.html5Mode(true);
+        //$locationProvider.html5Mode(true);
     }
 })();

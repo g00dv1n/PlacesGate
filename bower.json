@@ -21,6 +21,8 @@
     "angular-route": "^1.5.8",
     "bootstrap": "^3.3.7",
     "jquery": "^2.2",
-    "angular-ui-router": "^0.3.1"
+    "angular-ui-router": "^0.3.1",
+    "chart.js": "npm:chart.js#^2.2.2",
+    "angular-chart.js": "npm:angular-chart.js#^1.0.2"
   }
 }

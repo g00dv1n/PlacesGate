@@ -20,7 +20,6 @@ let placeSheme = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    env: String,
     md5: String
 });
 

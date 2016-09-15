@@ -5,6 +5,7 @@ let co = require('co');
 let mongoose = require('db')
 let PathNormalizer = require('helpers/path-normalizer');
 let filter = require('helpers/place-filter');
+let generator = require('helpers/env-generator');
 
 const NEED_NORMALIZE_PATH_AUTHORS = ['cuckoo'];
 
@@ -40,7 +41,6 @@ function addPlace(req, res) {
                 case 'cuckoo': {
                     let norm = PathNormalizer.normalizePath(params.data);
                     params.data = norm.data;
-                    params.env = norm.env;
                     break;
                 }
             }
@@ -61,21 +61,38 @@ function addPlace(req, res) {
 }
 
 function getPlaces (req, res) {
-    Place.find({})
+
+    let from = req.query && req.query.from || 0;
+    let to = req.query && req.query.to || 0;
+    let limit = parseInt(to) - parseInt(from);
+    let skip = from;
+
+    Place.find({},'', {limit: limit, skip: skip})
         .then(function(places) {
-            if (req.query && req.query.from && req.query.to) {
-                try {
-                    res.json(places.slice(req.query.from, req.query.to));
-                } catch (e) {
-                    res.json(e);
-                }
-            } else {
-                res.json(places);
-            }
+            res.json(places);
         })
         .catch(function (err) {
             sendError(res,err);
         });
+}
+
+function getStatistic(req, res) {
+    co(function *() {
+        let envEx = generator.getEnvRegExps();
+        let keys = Object.keys(envEx);
+        let stat = {};
+        for (let i=0; i<keys.length; i++) {
+            let k = keys[i];
+            stat[k] = yield Place.count({data: {
+                '$regex': `^${k}`
+            }
+            });
+        }
+        res.json(stat);
+    }).catch(function (err) {
+       sendError((res,err));
+    });
+
 }
 
 function getOnePlace(req, res) {
@@ -128,3 +145,4 @@ exports.getOnePlace = getOnePlace;
 exports.getPlaces = getPlaces;
 exports.editPlace = editPlace;
 exports.deletePlace = deletePlace;
+exports.getStatistic = getStatistic;

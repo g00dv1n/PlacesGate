@@ -15,12 +15,13 @@
         service.getOnePlace = getOnePlace;
         service.createPlace = createPlace;
         service.editPlace = editPlace;
+        service.getStat = getStat;
 
         var places = 'places'
         service.host = constConfig.host + ':' + constConfig.port;
         service.resource = `http://${service.host}/${places}`;
         
-        function getPlaces(from, to, params) {
+        function getPlaces(from, to) {
             return $http({
                 url: service.resource,
                 method: "GET",
@@ -48,6 +49,10 @@
 
         function createPlace(data) {
             return $http.post(service.resource,data);
+        }
+
+        function getStat() {
+            return $http.get(service.resource +'/stat');
         }
 
         return service;
