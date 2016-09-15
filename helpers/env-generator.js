@@ -22,7 +22,8 @@ class EnvGenerator {
             '%favorites%': /.:\\Users\\.*\\Favorites/g,
             '%localappdata%': /.:\\Users\\.*\\AppData\\LocalLow/i,
             '%local%': /.:\\Users\\.*\\AppData\\Local/i,
-            '%programfiles%': /.:\\Program Files/i
+            '%programfiles%': /.:\\Program Files/i,
+            '%systemdir%': /.:\\Windows\\System32/i
 
 
 
