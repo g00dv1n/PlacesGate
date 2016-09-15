@@ -13,6 +13,10 @@ router.get('/stat', (req,res) => {
     controller.getStatistic(req,res);
 });
 
+router.get('/authors', (req,res) => {
+    controller.getAuthors(req,res);
+});
+
 
 router.get('/', (req, res ) => {
     controller.getPlaces(req, res);

@@ -67,7 +67,14 @@ function getPlaces (req, res) {
     let limit = parseInt(to) - parseInt(from);
     let skip = from;
 
-    Place.find({},'', {limit: limit, skip: skip})
+    let query = req.query && req.query.q || {};
+    try {
+        query = JSON.parse(query);
+    } catch (err) {
+        query = {};
+    }
+
+    Place.find(query,'', {limit: limit, skip: skip})
         .then(function(places) {
             res.json(places);
         })
@@ -139,6 +146,18 @@ function deletePlace(req,res) {
         });
 }
 
+function getAuthors(req, res) {
+
+    Place.find().distinct('author')
+        .then((authors) => {
+            res.json(authors);
+        })
+        .catch((err) => {
+            sendError(res,err);
+        });
+    
+}
+
 
 exports.addPlace = addPlace;
 exports.getOnePlace = getOnePlace;
@@ -146,3 +165,4 @@ exports.getPlaces = getPlaces;
 exports.editPlace = editPlace;
 exports.deletePlace = deletePlace;
 exports.getStatistic = getStatistic;
+exports.getAuthors = getAuthors;
