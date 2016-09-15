@@ -40,7 +40,7 @@
 Для запроса используется: 
 
 ```
-GET  http://host:port//places?from=0&to=150&q={"type":"RPL"}
+GET  http://host:port/places?from=0&to=150&q={"type":"RPL"}
 ```
 
 q , from , to - необязательные параметры.
