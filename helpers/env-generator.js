@@ -14,7 +14,8 @@ class EnvGenerator {
             '%startmenu%': /.:\\Users\\.*\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu/i,
             '%appdata%' :/.:\\Users\\.*\\AppData\\Roaming/i,
             '%temp%': /.:\\Users\\.*\\AppData\\Local\\Temp/i,
-            '%mydoc%' : /.*\\Users\\.*\\Documents/i,
+            '%mydoc%' : /.:\\Users\\.*\\Documents/i,
+            '%desktop%': /.:\\Users\\.*\\Desktop/i,
             '%chromeprofile%': /.:\\Users\\.*\\AppData\\Local\\Google\\Chrome\\User Data\\Default/i,
             '%commonappdata%': /.:\\ProgramData/i,
             '%commondesktopdir%': /.:\\Users\\Public\\Desktop/i,
@@ -23,8 +24,9 @@ class EnvGenerator {
             '%localappdata%': /.:\\Users\\.*\\AppData\\LocalLow/i,
             '%local%': /.:\\Users\\.*\\AppData\\Local/i,
             '%programfiles%': /.:\\Program Files/i,
-            '%systemdir%': /.:\\Windows\\System32/i
-
+            '%tasks%': /.:\\Windows\\System32\\Tasks/i,
+            '%systemdir%': /.:\\Windows\\System32/i,
+            '%windir%': /.:\\Windows/i
 
 
             /*mydoc: `${windrive}\\Users\\${username}\\Documents`,
