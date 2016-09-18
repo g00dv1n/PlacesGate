@@ -43,6 +43,16 @@
                 });
         };
 
+        function genPromise(name) {
+            return Places.all(name).getList()
+                .then(function (res) {
+                    vm[name] = res.plain() || [];
+                    console.log(vm[name]);
+                });
+        }
+
+        //genPromise('env');
+
         function CreateRandom() {
             let author = 'gdvn';
             let data = '%programfiles%\\dasdasdasdd\\test_program';
