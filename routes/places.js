@@ -17,6 +17,14 @@ router.get('/authors', (req,res) => {
     controller.getAuthors(req,res);
 });
 
+router.get('/env', (req,res) => {
+    controller.getEnv(req,res);
+});
+
+router.get('/types', (req,res) => {
+    controller.getTypes(req,res);
+});
+
 
 router.get('/', (req, res ) => {
     controller.getPlaces(req, res);
@@ -38,9 +46,6 @@ router.delete('/:id', (req,res) => {
     controller.deletePlace(req,res);
 });
 
-router.get('/stat', (req,res) => {
-    controller.getStatistic(req,res);
-});
 
 
 

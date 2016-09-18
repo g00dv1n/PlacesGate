@@ -6,9 +6,9 @@
         .module('placesGate')
         .controller('TableController', TableController);
 
-    TableController.$inject = ['$scope', 'PlacesHelper', '$timeout']
+    TableController.$inject = ['$scope', 'PlacesHelper', '$timeout', 'Places']
 
-    function TableController($scope, PlacesHelper,$timeout) {
+    function TableController($scope, PlacesHelper,$timeout, Places) {
 
         let vm  = this;
 
@@ -20,7 +20,8 @@
             var i = vm.places.indexOf(element);
             var id = element._id;
             console.log(i);
-            PlacesHelper.deletePlace(id)
+            //PlacesHelper.deletePlace(id)
+            Places.one(id).remove()
                 .then(function (res) {
                     vm.places.splice(i,1);
                 });
@@ -34,21 +35,13 @@
             var number = pagination.number || 15;
             var page = (pagination.start + pagination.number) / 15;
             tableState.pagination.numberOfPages = page + 5;
-            PlacesHelper.getPlaces(start, start + number)
+            //PlacesHelper.get(start, start + number)
+            Places.getList({from: start, to: start + number})
                 .then(function (res) {
                     vm.isLoading = false;
-
-                    vm.places = res.data;
+                    vm.places = res.plain();
                 });
         };
-
-        PlacesHelper.getPlaces()
-            .then(function (res) {
-                vm.isLoading = false;
-                vm.places = res.data;
-            });
-
-
 
         function CreateRandom() {
             let author = 'gdvn';

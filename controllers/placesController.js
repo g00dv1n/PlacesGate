@@ -64,7 +64,7 @@ function getPlaces (req, res) {
 
     let from = req.query && req.query.from || 0;
     let to = req.query && req.query.to || 0;
-    let limit = parseInt(to) - parseInt(from);
+    let limit = (parseInt(to) - parseInt(from)) || 15;
     let skip = from;
 
     let query = req.query && req.query.q || {};
@@ -74,7 +74,7 @@ function getPlaces (req, res) {
         query = {};
     }
 
-    Place.find(query,'', {limit: limit, skip: skip})
+    Place.find(query,'', {limit: parseInt(limit), skip: parseInt(skip)})
         .then(function(places) {
             res.json(places);
         })
@@ -158,6 +158,22 @@ function getAuthors(req, res) {
     
 }
 
+function getEnv(req, res) {
+    let envVars = Object.keys(generator.getEnvRegExps());
+    res.json(envVars);
+}
+
+function getTypes(req, res) {
+    Place.find().distinct('type')
+        .then((types) => {
+            res.json(types);
+        })
+        .catch((err) => {
+            sendError(res,err);
+        });
+
+}
+
 
 exports.addPlace = addPlace;
 exports.getOnePlace = getOnePlace;
@@ -166,3 +182,5 @@ exports.editPlace = editPlace;
 exports.deletePlace = deletePlace;
 exports.getStatistic = getStatistic;
 exports.getAuthors = getAuthors;
+exports.getEnv = getEnv;
+exports.getTypes = getTypes;

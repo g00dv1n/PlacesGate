@@ -4,7 +4,7 @@
 
 let config = {
     PORT: process.env.PORT || 8080,
-    MAIN_DB: 'mongodb://10.10.10.12/placesgate',
+    MAIN_DB: 'mongodb://localhost/placesgate',
     SECONDARY_DB: 'mongodb://10.10.10.13/collect_analyzer'
 };
 
