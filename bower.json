@@ -24,6 +24,7 @@
     "angular-ui-router": "^0.3.1",
     "chart.js": "npm:chart.js#^2.2.2",
     "angular-chart.js": "npm:angular-chart.js#^1.0.2",
-    "restangular": "^1.5.2"
+    "restangular": "^1.5.2",
+    "angular-ui-select": "^0.19.4"
   }
 }

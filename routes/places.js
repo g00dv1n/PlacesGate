@@ -25,6 +25,14 @@ router.get('/types', (req,res) => {
     controller.getTypes(req,res);
 });
 
+router.get('/unique', (req,res) => {
+    controller.getUniqSamplesCount(req,res);
+});
+
+router.post('/changebymd5', (req,res) => {
+    controller.changeNameByMD5(req,res);
+});
+
 
 router.get('/', (req, res ) => {
     controller.getPlaces(req, res);

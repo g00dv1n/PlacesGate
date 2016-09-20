@@ -6,3 +6,7 @@ body {
 a {
   color: #00B7FF;
 }
+
+.mb-sm {
+  margin-bottom: 10px !important;
+}

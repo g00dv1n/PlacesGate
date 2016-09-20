@@ -159,6 +159,16 @@ function getAuthors(req, res) {
     
 }
 
+function getUniqSamplesCount(req, res) {
+    Place.find().distinct('md5').count()
+        .then((count) => {
+            res.json({'count':count});
+        })
+        .catch((err) => {
+            sendError(res,err);
+        });
+}
+
 function getEnv(req, res) {
     let envVars = Object.keys(generator.getEnvRegExps());
     res.json(envVars);
@@ -175,6 +185,16 @@ function getTypes(req, res) {
 
 }
 
+function changeNameByMD5(req, res) {
+    Place.update({md5: req.body.md5}, {name: req.body.name}, {multi: true})
+        .then((update)=> {
+            res.json(update);
+        })
+        .catch((err) => {
+            sendError(res,err);
+        });
+}
+
 
 exports.addPlace = addPlace;
 exports.getOnePlace = getOnePlace;
@@ -185,3 +205,5 @@ exports.getStatistic = getStatistic;
 exports.getAuthors = getAuthors;
 exports.getEnv = getEnv;
 exports.getTypes = getTypes;
+exports.getUniqSamplesCount = getUniqSamplesCount;
+exports.changeNameByMD5 = changeNameByMD5;

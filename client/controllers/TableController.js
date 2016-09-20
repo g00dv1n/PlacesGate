@@ -31,17 +31,46 @@
             vm.isLoading = true;
             var pagination = tableState.pagination;
             console.log(tableState.pagination);
-            var start = pagination.start || 0;
+            vm.start = pagination.start || 0;
             var number = pagination.number || 15;
             var page = (pagination.start + pagination.number) / 15;
             tableState.pagination.numberOfPages = page + 5;
             //PlacesHelper.get(start, start + number)
-            Places.getList({from: start, to: start + number})
+            /*Places.getList({from: vm.start, to: vm.start + 15})
+                .then(function (res) {
+                    vm.isLoading = false;
+                    vm.places = res.plain();
+                });*/
+            vm.fetchData({});
+        };
+
+        vm.fetchData = function (q) {
+            Places.getList({
+                from: vm.start,
+                to: vm.start + 15,
+                q: q
+            })
                 .then(function (res) {
                     vm.isLoading = false;
                     vm.places = res.plain();
                 });
-        };
+        }
+
+        vm.updateData = function () {
+            var q = {
+                author: vm.authors.selected && vm.authors.selected.value || '',
+                type: vm.types.selected  && vm.types.selected.value || ''
+
+            };
+
+            for (var i in q) {
+                if (!q[i]) {
+                    delete q[i];
+                }
+            }
+            vm.fetchData(q)
+
+        }
 
         function genPromise(name) {
             return Places.all(name).getList()
@@ -51,7 +80,10 @@
                 });
         }
 
-        //genPromise('env');
+        genPromise('env');
+        genPromise('types');
+        genPromise('authors');
+
 
         function CreateRandom() {
             let author = 'gdvn';
