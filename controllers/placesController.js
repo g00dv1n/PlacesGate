@@ -95,6 +95,7 @@ function getStatistic(req, res) {
             }
             });
         }
+
         res.json(stat);
     }).catch(function (err) {
        sendError((res,err));
