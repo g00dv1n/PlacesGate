@@ -41,7 +41,7 @@
                     vm.isLoading = false;
                     vm.places = res.plain();
                 });*/
-            vm.fetchData({});
+            vm.updateData();
         };
 
         vm.fetchData = function (q) {
@@ -54,29 +54,65 @@
                     vm.isLoading = false;
                     vm.places = res.plain();
                 });
-        }
+        };
+
+        vm.clearFilter = function () {
+            vm.env.selected.value = 'None';
+            vm.authors.selected.value = 'None';
+            vm.types.selected.value = 'None';
+
+            vm.name = '';
+            vm.md5 = '';
+            vm.search = '';
+
+            vm.updateData();
+
+        };
 
         vm.updateData = function () {
+            var env = vm.env && vm.env.selected  && vm.env.selected.value || '';
+            var and = [];
+            var name = '';
+            if(env && env !== 'None') {
+                and.push({
+                    data: {$regex: '^' + env}
+                });
+            }
+            if(vm.search) {
+                and.push({
+                    data: {$regex: vm.search, $options: 'i'}
+                });
+            }
+
+            if(vm.name) {
+                name = {$regex: vm.name, $options: 'i'};
+            }
+
             var q = {
-                author: vm.authors.selected && vm.authors.selected.value || '',
-                type: vm.types.selected  && vm.types.selected.value || ''
+                author:vm.authors && vm.authors.selected && vm.authors.selected.value || '',
+                type: vm.types && vm.types.selected  && vm.types.selected.value || '',
+                $and: and,
+                md5: vm.md5,
+                name: name
 
             };
 
             for (var i in q) {
-                if (!q[i]) {
+                if (!q[i] || q[i] === 'None' || q[i].length === 0) {
                     delete q[i];
                 }
             }
             vm.fetchData(q)
 
-        }
+        };
 
         function genPromise(name) {
             return Places.all(name).getList()
                 .then(function (res) {
                     vm[name] = res.plain() || [];
                     console.log(vm[name]);
+                    var i = vm[name].push('None') - 1;
+                    vm[name].selected = {value: vm[name][i]};
                 });
         }
 

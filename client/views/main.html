@@ -1,54 +1,72 @@
 <button class="btn mb-sm  btn-success" ng-click="vm.isShowfilter=true;" ng-if="!vm.isShowfilter">Show filter</button>
 <button class="btn mb-sm  btn-warning" ng-click="vm.isShowfilter=false;" ng-if="vm.isShowfilter">Hide filter</button>
 
-<div class="row mb-sm" ng-if="vm.isShowfilter">
-    <div class="col-md-4">
-        <label for="env">Env variable</label>
-        <ui-select ng-model="vm.env.selected.value" id="env">
-            <ui-select-match>
-                <span ng-bind="$select.selected"></span>
-            </ui-select-match>
-            <ui-select-choices repeat="item in (vm.env | filter: $select.search)">
-                <span ng-bind="item"></span>
-            </ui-select-choices>
-        </ui-select>
+
+<div ng-if="vm.isShowfilter">
+
+    <div class="row mb-sm">
+        <div class="col-md-6">
+            <label for="search">Search data query</label>
+            <input class="form-control" id="search" ng-model="vm.search">
+        </div>
+        <div class="col-md-6">
+            <label for="search">Search name query</label>
+            <input class="form-control" id="name" ng-model="vm.name">
+        </div>
+
     </div>
-    <div class="col-md-4">
-        <label for="types">Types</label>
-        <ui-select ng-model="vm.types.selected.value" id="types" >
-            <ui-select-match>
-                <span ng-bind="$select.selected"></span>
-            </ui-select-match>
-            <ui-select-choices repeat="item in (vm.types | filter: $select.search)">
-                <span ng-bind="item"></span>
-            </ui-select-choices>
-        </ui-select>
+    <div class="row mb-sm">
+        <div class="col-md-4">
+            <label for="env">Env variable</label>
+            <ui-select ng-model="vm.env.selected.value" id="env">
+                <ui-select-match>
+                    <span ng-bind="$select.selected"></span>
+                </ui-select-match>
+                <ui-select-choices repeat="item in (vm.env | filter: $select.search)">
+                    <span ng-bind="item"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-md-4">
+            <label for="types">Types</label>
+            <ui-select ng-model="vm.types.selected.value" id="types" >
+                <ui-select-match>
+                    <span ng-bind="$select.selected"></span>
+                </ui-select-match>
+                <ui-select-choices repeat="item in (vm.types | filter: $select.search)">
+                    <span ng-bind="item"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-md-4">
+            <label for="authors">Author</label>
+            <ui-select ng-model="vm.authors.selected.value" id="authors">
+                <ui-select-match>
+                    <span ng-bind="$select.selected"></span>
+                </ui-select-match>
+                <ui-select-choices repeat="item in (vm.authors | filter: $select.search)">
+                    <span ng-bind="item"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
     </div>
-    <div class="col-md-4">
-        <label for="authors">Author</label>
-        <ui-select ng-model="vm.authors.selected.value" id="authors">
-            <ui-select-match>
-                <span ng-bind="$select.selected"></span>
-            </ui-select-match>
-            <ui-select-choices repeat="item in (vm.authors | filter: $select.search)">
-                <span ng-bind="item"></span>
-            </ui-select-choices>
-        </ui-select>
+
+    <div class="row mb-sm">
+        <div class="col-md-4">
+            <input type="text" placeholder="md5" class="form-control" ng-model="vm.md5">
+        </div>
     </div>
+
+    <button class="btn mb-sm  btn-primary" ng-click="vm.updateData()" >Apply</button>
+    <button class="btn mb-sm  btn-danger" ng-click="vm.clearFilter()" >Clear</button>
 </div>
 
-<div class="row mb-sm" ng-if="vm.isShowfilter">
-    <div class="col-md-4">
-        <input type="text" placeholder="md5" class="form-control">
-    </div>
-</div>
 
-<button class="btn mb-sm  btn-primary" ng-click="vm.updateData()" ng-if="vm.isShowfilter">Apply</button>
 
 <table st-table="vm.places" st-pipe="vm.getData" class="table table-striped">
     <thead>
     <tr>
-        <th st-sort="created">Post Date</th>
+        <th st-sort="created">Date</th>
         <th st-sort="author">Author</th>
         <th st-sort="type">Type</th>
         <th st-sort="data">Data</th>
