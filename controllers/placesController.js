@@ -74,7 +74,7 @@ function getPlaces (req, res) {
         query = {};
     }
 
-    Place.find(query,'', {limit: parseInt(limit), skip: parseInt(skip)})
+    Place.find(query,'', {limit: parseInt(limit), skip: parseInt(skip), sort: { created: -1}})
         .then(function(places) {
             res.json(places);
         })
